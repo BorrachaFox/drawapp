@@ -1,0 +1,60 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: row;
+  cursor: url('assets/pen.png'), auto;
+}
+
+#tela {
+  width: 600px;
+  height: 600px;
+  border: 1px solid #000;
+}
+
+#paleta {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+#sizeInput {
+  width: 50px;
+  height: 50px;
+  font-size: 20px;
+}
+
+.colorBtn {
+  width: 50px;
+  height: 50px;
+  margin: 5px 0;
+  border: none;
+}
+
+.colorBtn:hover {
+  border: 2px solid rgb(255, 232, 102);
+}
+
+/*   
+  COLORS 
+*/
+
+.blue {
+  background-color: #2E86C1;
+}
+
+.red {
+  background-color: #E74C3C;
+}
+
+.green {
+  background-color: #2ECC71;
+}
+
+.black {
+  background-color: #000000;
+}
