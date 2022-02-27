@@ -2,74 +2,51 @@ const canvas = document.getElementById("tela");
 const ctx = canvas.getContext("2d");
 const sizeInput = document.getElementById("sizeInput");
 
-canvas.width = 600;
-canvas.height = 600;
+canvas.width = window.innerWidth - 60;
+canvas.height = 500;
 
 const pen = {
   active: false,
   moving: false,
   pos: { x: 0, y: 0 },
   lastPos: null,
-  size: 5,
-  color: "#000",
+  size: 1,
+  color: "#555",
+  type: "brush",
 };
 
-sizeInput.addEventListener("change", () => {
-  pen.size = parseInt(sizeInput.value);
-});
+canvas.addEventListener("touchstart", start, false);
+canvas.addEventListener("touchmove", draw, false);
+canvas.addEventListener("touchcancel", draw, false);
+canvas.addEventListener("mousedown", start, false);
+canvas.addEventListener("mousemove", draw, false);
+canvas.addEventListener("mouseup", stop, false);
 
-let drawSquare = (pos) => {
-  ctx.fillStyle = "red";
-  ctx.fillRect(pos.x - 5, pos.y - 5, 10, 10);
-};
 
-let drawCircle = (pos, size, color) => {
-  ctx.fillStyle = color;
+function start(event) {
+  pen.active = true
   ctx.beginPath();
-  ctx.arc(pos.x - size / 2, pos.y - size / 2, size, 0, 2 * Math.PI);
-  ctx.fill();
-};
+  ctx.moveTo(event.clientX - canvas.offsetLeft, 
+            event.clientY - canvas.offsetTop);
+  event.preventDefault();
+}
 
-let drawLine = (line, size, color) => {
-  ctx.lineWidth = size;
-  ctx.strokeStyle = color;
-  ctx.beginPath();
-  ctx.moveTo(line.lastPos.x, line.lastPos.y);
-  ctx.lineTo(line.pos.x, line.pos.y);
-  ctx.stroke();
-};
-
-canvas.onmousedown = (event) => {
-  pen.active = true;
-};
-canvas.onmouseup = (event) => {
-  pen.active = false;
-  console.log(pen.lastPos)
-};
-
-canvas.onmousemove = (event) => {
-  pen.pos.x = event.clientX;
-  pen.pos.y = event.clientY;
-  pen.moving = true;
-};
-
-let ciclo = () => {
-  if (pen.active && pen.moving) {
-    drawLine({ pos: pen.pos, lastPos: pen.lastPos }, pen.size, pen.color);
-    pen.movendo = false;
+function draw(event) {
+  if (pen.active && pen.type === "brush") {
+    ctx.lineTo(event.clientX - canvas.offsetLeft, 
+      event.clientY - canvas.offsetTop);
+      ctx.strokeStyle = pen.color;
+      ctx.lineWidth = pen.size;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.stroke();
   }
+}
 
-  pen.lastPos = { ...pen.pos };
-
-  window.requestAnimationFrame(ciclo);
-};
-window.requestAnimationFrame(ciclo);
-
-let actualBtn = null;
-function getColor(_this, color) {
-  if (actualBtn) actualBtn.style.border = "none";
-
-  pen.color = color;
-  _this.style.border = "2px solid rgb(255, 232, 102)";
-  actualBtn = _this;
+function stop(event) {
+  if (pen.active) {
+    ctx.stroke();
+    pen.active = false;
+  }
+  event.preventDefault();
 }
