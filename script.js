@@ -1,19 +1,22 @@
 const canvas = document.getElementById("tela");
 const ctx = canvas.getContext("2d");
 const sizeInput = document.getElementById("sizeInput");
+const selectedColor = document.getElementById("selectedColor");
 
 canvas.width = window.innerWidth - 60;
-canvas.height = 500;
+canvas.height = 600;
 
 const pen = {
   active: false,
   moving: false,
   pos: { x: 0, y: 0 },
   lastPos: null,
-  size: 1,
-  color: "#555",
+  size: 2,
+  color: "#000",
   type: "brush",
 };
+
+sizeInput.addEventListener("input", () => {pen.size = sizeInput.value})
 
 canvas.addEventListener("touchstart", start, false);
 canvas.addEventListener("touchmove", draw, false);
@@ -49,4 +52,9 @@ function stop(event) {
     pen.active = false;
   }
   event.preventDefault();
+}
+
+function getColor(_this, color) {
+  pen.color = color;
+  selectedColor.style.backgroundColor = color;
 }

@@ -11,13 +11,16 @@
 <body>
   <canvas id="tela">
   </canvas>
-  
+
   <div id="paleta">
-    <button onclick="getColor(this, '#2E86C1')" type="button" class="colorBtn blue"></button>
-    <button onclick="getColor(this, '#E74C3C')" type="button" class="colorBtn red"></button>
-    <button onclick="getColor(this, '#2ECC71')" type="button" class="colorBtn green"></button>
-    <button onclick="getColor(this, '#000000')" type="button" class="colorBtn black"></button>
-    <input id="sizeInput" type="number" value="5">
+    <button disabled type="button" id="selectedColor" class="colorBtn black"></button>
+    <div id="colors">
+      <button onclick="getColor(this, '#2E86C1')" type="button" class="colorBtn blue"></button>
+      <button onclick="getColor(this, '#E74C3C')" type="button" class="colorBtn red"></button>
+      <button onclick="getColor(this, '#2ECC71')" type="button" class="colorBtn green"></button>
+      <button onclick="getColor(this, '#000000')" type="button" class="colorBtn black"></button>
+    </div>
+    <input type="range" min="1" max="40" id="sizeInput">
   </div>
 </body>
 </html>
